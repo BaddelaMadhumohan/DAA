@@ -1,5 +1,8 @@
 #include <iostream>
+#include <chrono>
+#include <ctime>
 using namespace std;
+using namespace chrono;
 
 // Bubble Sort
 void bubbleSort(int arr[], int n)
@@ -57,6 +60,7 @@ void insertionSort(int arr[], int n)
 void merge(int arr[], int low, int mid, int high)
 {
     int temp[100];
+
     int i = low;
     int j = mid + 1;
     int k = low;
@@ -133,58 +137,77 @@ void quickSort(int arr[], int low, int high)
 
 int main()
 {
-    int n;
-
-    cout << "Enter number of elements: ";
-    cin >> n;
+    const int n = 100;
 
     int arr[n];
+    int temp[n];
 
-    cout << "Enter elements: ";
+    srand(time(0));
+
     for(int i = 0; i < n; i++)
-    {
-        cin >> arr[i];
-    }
+        arr[i] = rand() % 1000;
+
+    cout << "Number of Elements = " << n << "\n\n";
 
     // Bubble Sort
-    bubbleSort(arr, n);
-    cout << "\nBubble Sort: ";
     for(int i = 0; i < n; i++)
-    {
-        cout << arr[i] << " ";
-    }
+        temp[i] = arr[i];
+
+    auto start = high_resolution_clock::now();
+    bubbleSort(temp, n);
+    auto stop = high_resolution_clock::now();
+
+    cout << "Bubble Sort Time    : "
+         << duration_cast<microseconds>(stop - start).count()
+         << " microseconds\n";
 
     // Selection Sort
-    selectionSort(arr, n);
-    cout << "\nSelection Sort: ";
     for(int i = 0; i < n; i++)
-    {
-        cout << arr[i] << " ";
-    }
+        temp[i] = arr[i];
+
+    start = high_resolution_clock::now();
+    selectionSort(temp, n);
+    stop = high_resolution_clock::now();
+
+    cout << "Selection Sort Time : "
+         << duration_cast<microseconds>(stop - start).count()
+         << " microseconds\n";
 
     // Insertion Sort
-    insertionSort(arr, n);
-    cout << "\nInsertion Sort: ";
     for(int i = 0; i < n; i++)
-    {
-        cout << arr[i] << " ";
-    }
+        temp[i] = arr[i];
+
+    start = high_resolution_clock::now();
+    insertionSort(temp, n);
+    stop = high_resolution_clock::now();
+
+    cout << "Insertion Sort Time : "
+         << duration_cast<microseconds>(stop - start).count()
+         << " microseconds\n";
 
     // Merge Sort
-    mergeSort(arr, 0, n - 1);
-    cout << "\nMerge Sort: ";
     for(int i = 0; i < n; i++)
-    {
-        cout << arr[i] << " ";
-    }
+        temp[i] = arr[i];
+
+    start = high_resolution_clock::now();
+    mergeSort(temp, 0, n - 1);
+    stop = high_resolution_clock::now();
+
+    cout << "Merge Sort Time     : "
+         << duration_cast<microseconds>(stop - start).count()
+         << " microseconds\n";
 
     // Quick Sort
-    quickSort(arr, 0, n - 1);
-    cout << "\nQuick Sort: ";
     for(int i = 0; i < n; i++)
-    {
-        cout << arr[i] << " ";
-    }
+        temp[i] = arr[i];
+
+    start = high_resolution_clock::now();
+    quickSort(temp, 0, n - 1);
+    stop = high_resolution_clock::now();
+
+    cout << "Quick Sort Time     : "
+         << duration_cast<microseconds>(stop - start).count()
+         << " microseconds\n";
 
     return 0;
 }
